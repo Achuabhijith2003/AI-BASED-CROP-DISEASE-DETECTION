@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Disease Detection - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <a href="index.html" class="back-button">← Back</a>
+            <h1>Crop Disease Detection</h1>
+        </header>
+
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="upload">Upload Image</button>
+                <button class="tab-button" data-tab="camera">Take Photo</button>
+            </div>
+
+            <div class="tab-content active" id="upload-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Upload an Image</h2>
+                        <p>Upload a photo of your crop to detect diseases</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                <div class="upload-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                                <p>Drag and drop an image or click to browse</p>
+                            </div>
+                            <img id="uploadedImage" class="preview-image" style="display: none;">
+                            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" id="analyzeUploadBtn" disabled>Analyze Image</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="camera-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Take a Photo</h2>
+                        <p>Use your camera to take a photo of your crop</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="camera-area">
+                            <video id="video" class="camera-preview" autoplay playsinline style="display: none;"></video>
+                            <img id="capturedImage" class="preview-image" style="display: none;">
+                            <div class="camera-placeholder" id="cameraPlaceholder">
+                                <div class="camera-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                        <circle cx="12" cy="13" r="4"></circle>
+                                    </svg>
+                                </div>
+                                <p>Click the button below to start your camera</p>
+                            </div>
+                            <canvas id="canvas" style="display: none;"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary" id="startCameraBtn">Start Camera</button>
+                        <button class="btn btn-secondary" id="capturePictureBtn" style="display: none;">Capture Photo</button>
+                        <button class="btn btn-primary" id="analyzeCaptureBtn" disabled>Analyze Image</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-container" id="resultContainer" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Analysis Result</h2>
+                </div>
+                <div class="card-body">
+                    <p id="resultText" class="result-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
