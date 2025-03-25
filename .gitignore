@@ -1,2 +1,4 @@
 BRO
 *__pycache__
+model/trained_models.keras
+uploads

@@ -1,529 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crop Disease Detection - Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
     <style>
-     /* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background-color: #f0f9f0;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Login Page Styles */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-.login-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    overflow: hidden;
-}
-
-.login-header {
-    padding: 20px;
-    text-align: center;
-}
-
-.login-header h1 {
-    color: #2e7d32;
-    margin-bottom: 8px;
-    font-size: 24px;
-}
-
-.login-header p {
-    color: #666;
-    font-size: 14px;
-}
-
-.login-body {
-    padding: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #2e7d32;
-    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
-}
-
-.btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-primary {
-    background-color: #2e7d32;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #1b5e20;
-}
-
-.btn-primary:disabled {
-    background-color: #a5d6a7;
-    cursor: not-allowed;
-}
-
-.btn-secondary {
-    background-color: #1976d2;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background-color: #1565c0;
-}
-
-/* Dashboard Styles */
-.dashboard-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.dashboard-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.back-button {
-    text-decoration: none;
-    color: #333;
-    margin-right: 15px;
-    font-size: 18px;
-}
-
-.dashboard-header h1 {
-    color: #2e7d32;
-    font-size: 24px;
-}
-
-.tab-container {
-    margin-bottom: 20px;
-}
-
-.tabs {
-    display: flex;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 20px;
-}
-
-.tab-button {
-    padding: 10px 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    color: #666;
-    position: relative;
-}
-
-.tab-button.active {
-    color: #2e7d32;
-}
-
-.tab-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: #2e7d32;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.card-header {
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.card-header h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.card-header p {
-    font-size: 14px;
-    color: #666;
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.card-footer {
-    padding: 15px 20px;
-    border-top: 1px solid #eee;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-.upload-area, .camera-area {
-    width: 100%;
-    height: 250px;
-    border: 2px dashed #ddd;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background-color: #f9f9f9;
-}
-
-.upload-placeholder, .camera-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-}
-
-.upload-icon, .camera-icon {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    color: #aaa;
-}
-
-.preview-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.camera-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.result-container {
-    margin-top: 20px;
-}
-
-.result-text {
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-@media (max-width: 600px) {
-    .card-footer {
-        flex-direction: column;
-    }
-    
-    .btn {
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      body {
+        background-color: #f0f9f0;
+        color: #333;
+        line-height: 1.6;
+      }
+      
+      /* Login Page Styles */
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      
+      .login-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         width: 100%;
-    }
-}
-       
-      </style>
+        max-width: 400px;
+        overflow: hidden;
+      }
+      
+      .login-header {
+        padding: 20px;
+        text-align: center;
+      }
+      
+      .login-header h1 {
+        color: #2e7d32;
+        margin-bottom: 8px;
+        font-size: 24px;
+      }
+      
+      .login-header p {
+        color: #666;
+        font-size: 14px;
+      }
+      
+      .login-body {
+        padding: 20px;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        font-size: 14px;
+      }
+      
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+      
+      .form-group input:focus {
+        outline: none;
+        border-color: #2e7d32;
+        box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+      }
+      
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      
+      .btn-primary {
+        background-color: #2e7d32;
+        color: white;
+      }
+      
+      .btn-primary:hover {
+        background-color: #1b5e20;
+      }
+      
+      .btn-primary:disabled {
+        background-color: #a5d6a7;
+        cursor: not-allowed;
+      }
+      
+      .btn-secondary {
+        background-color: #1976d2;
+        color: white;
+      }
+      
+      .btn-secondary:hover {
+        background-color: #1565c0;
+      }
+      
+      /* Dashboard Styles */
+      .dashboard-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      .dashboard-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .back-button {
+        text-decoration: none;
+        color: #333;
+        margin-right: 15px;
+        font-size: 18px;
+      }
+      
+      .dashboard-header h1 {
+        color: #2e7d32;
+        font-size: 24px;
+      }
+      
+      .tab-container {
+        margin-bottom: 20px;
+      }
+      
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+      }
+      
+      .tab-button {
+        padding: 10px 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        color: #666;
+        position: relative;
+      }
+      
+      .tab-button.active {
+        color: #2e7d32;
+      }
+      
+      .tab-button.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #2e7d32;
+      }
+      
+      .tab-content {
+        display: none;
+      }
+      
+      .tab-content.active {
+        display: block;
+      }
+      
+      .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      
+      .card-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .card-header h2 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 5px;
+      }
+      
+      .card-header p {
+        font-size: 14px;
+        color: #666;
+      }
+      
+      .card-body {
+        padding: 20px;
+      }
+      
+      .card-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+      
+      .upload-area,
+      .camera-area {
+        width: 100%;
+        height: 250px;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        background-color: #f9f9f9;
+      }
+      
+      .upload-placeholder,
+      .camera-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .upload-icon,
+      .camera-icon {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        color: #aaa;
+      }
+      
+      .preview-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+      
+      .camera-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .result-container {
+        margin-top: 20px;
+      }
+      
+      .result-text {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      
+      @media (max-width: 600px) {
+        .card-footer {
+          flex-direction: column;
+        }
+      
+        .btn {
+          width: 100%;
+        }
+      }
+    </style>
     <div class="dashboard-container">
-        <header class="dashboard-header">
-            <a href="index.html" class="back-button">← Back</a>
-            <h1>Crop Disease Detection</h1>
-        </header>
+      <header class="dashboard-header">
+        <h1>Crop Disease Detection</h1>
+      </header>
 
-        <div class="tab-container">
-            <div class="tabs">
-                <button class="tab-button active" data-tab="upload">Upload Image</button>
-                <button class="tab-button" data-tab="camera">Take Photo</button>
+      <div class="tab-container">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="upload">Upload Image</button>
+          <button class="tab-button" data-tab="camera">Take Photo</button>
+        </div>
+        <div class="tab-content active" id="upload-tab">
+          <div class="card">
+            <div class="card-header">
+              <h2>Upload an Image</h2>
+              <p>Upload a photo of your crop to detect diseases</p>
             </div>
-
-            <div class="tab-content active" id="upload-tab">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Upload an Image</h2>
-                        <p>Upload a photo of your crop to detect diseases</p>
+            <div class="card-body">
+              <form id="uploadForm" enctype="multipart/form-data">
+                <div class="upload-area" id="uploadArea">
+                  <div class="upload-placeholder" id="uploadPlaceholder">
+                    <div class="upload-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                      </svg>
                     </div>
-                    <div class="card-body">
-                        <div class="upload-area" id="uploadArea">
-                            <div class="upload-placeholder" id="uploadPlaceholder">
-                                <div class="upload-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                        <polyline points="17 8 12 3 7 8"></polyline>
-                                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                                    </svg>
-                                </div>
-                                <p>Drag and drop an image or click to browse</p>
-                            </div>
-                            <img id="uploadedImage" class="preview-image" style="display: none;">
-                            <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary" id="analyzeUploadBtn" disabled>Analyze Image</button>
-                    </div>
+                    <p>Drag and drop an image or click to browse</p>
+                  </div>
+                  <img id="uploadedImage" class="preview-image" style="display: none;" />
+                  <input type="file" name="image" id="fileInput" accept="image/*" style="display: none;" />
                 </div>
-            </div>
-
-            <div class="tab-content" id="camera-tab">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Take a Photo</h2>
-                        <p>Use your camera to take a photo of your crop</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="camera-area">
-                            <video id="video" class="camera-preview" autoplay playsinline style="display: none;"></video>
-                            <img id="capturedImage" class="preview-image" style="display: none;">
-                            <div class="camera-placeholder" id="cameraPlaceholder">
-                                <div class="camera-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                                        <circle cx="12" cy="13" r="4"></circle>
-                                    </svg>
-                                </div>
-                                <p>Click the button below to start your camera</p>
-                            </div>
-                            <canvas id="canvas" style="display: none;"></canvas>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-secondary" id="startCameraBtn">Start Camera</button>
-                        <button class="btn btn-secondary" id="capturePictureBtn" style="display: none;">Capture Photo</button>
-                        <button class="btn btn-primary" id="analyzeCaptureBtn" disabled>Analyze Image</button>
-                    </div>
+                <div class="card-footer">
+                  <button class="btn btn-primary" id="analyzeUploadBtn" type="submit">Analyze Image</button>
                 </div>
+              </form>
+              <div id="uploadResult"></div>
             </div>
+          </div>
         </div>
 
-        <div class="result-container" id="resultContainer" style="display: none;">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Analysis Result</h2>
-                </div>
-                <div class="card-body">
-                    <p id="resultText" class="result-text"></p>
-                </div>
+        <div class="tab-content" id="camera-tab">
+          <div class="card">
+            <div class="card-header">
+              <h2>Take a Photo</h2>
+              <p>Use your camera to take a photo of your crop</p>
             </div>
+            <div class="card-body">
+              <div class="camera-area">
+                <video id="video" class="camera-preview" autoplay playsinline style="display: none;"></video>
+                <img id="capturedImage" class="preview-image" style="display: none;" />
+                <div class="camera-placeholder" id="cameraPlaceholder">
+                  <div class="camera-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                      <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                  </div>
+                  <p>Click the button below to start your camera</p>
+                </div>
+                <canvas id="canvas" style="display: none;"></canvas>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-secondary" id="startCameraBtn">Start Camera</button>
+              <button class="btn btn-secondary" id="capturePictureBtn" style="display: none;">Capture Photo</button>
+              <button class="btn btn-primary" id="analyzeCaptureBtn" type="submit">Analyze Image</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+            <h2>Analysis Result</h2>
+        </div>
+        <div class="card-body">
+            <p id="resultText" class="result-text"></p>
         </div>
     </div>
+    <div class="result-container" id="resultContainer" style="display: none;"></div>
+    </div>
 
-    <script> // Wait for DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Login form handling
-            const loginForm = document.getElementById('loginForm');
-            if (loginForm) {
-                loginForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // In a real app, you would validate credentials here
-                    window.location.href = 'dashboard.html';
-                });
+
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button')
+        const tabContents = document.querySelectorAll('.tab-content')
+      
+        if (tabButtons.length > 0) {
+          tabButtons.forEach((button) => {
+            button.addEventListener('click', function () {
+              tabButtons.forEach((btn) => btn.classList.remove('active'))
+              tabContents.forEach((content) => content.classList.remove('active'))
+              this.classList.add('active')
+              const tabId = this.getAttribute('data-tab') + '-tab'
+              document.getElementById(tabId).classList.add('active')
+            })
+          })
+        }
+      
+        // File upload handling
+        const uploadArea = document.getElementById('uploadArea')
+        const fileInput = document.getElementById('fileInput')
+        const uploadedImage = document.getElementById('uploadedImage')
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder')
+        const analyzeUploadBtn = document.getElementById('analyzeUploadBtn')
+        const uploadForm = document.getElementById('uploadForm')
+        const uploadResult = document.getElementById('uploadResult')
+      
+        if (uploadArea) {
+          uploadArea.addEventListener('click', function () {
+            fileInput.click()
+          })
+      
+          uploadArea.addEventListener('dragover', function (e) {
+            e.preventDefault()
+            this.style.borderColor = '#2e7d32'
+          })
+      
+          uploadArea.addEventListener('dragleave', function () {
+            this.style.borderColor = '#ddd'
+          })
+      
+          uploadArea.addEventListener('drop', function (e) {
+            e.preventDefault()
+            this.style.borderColor = '#ddd'
+      
+            if (e.dataTransfer.files.length) {
+              handleFile(e.dataTransfer.files[0])
             }
-        
-            // Dashboard tab switching
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-        
-            if (tabButtons.length > 0) {
-                tabButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Remove active class from all buttons and contents
-                        tabButtons.forEach(btn => btn.classList.remove('active'));
-                        tabContents.forEach(content => content.classList.remove('active'));
-                        
-                        // Add active class to clicked button
-                        this.classList.add('active');
-                        
-                        // Show corresponding content
-                        const tabId = this.getAttribute('data-tab') + '-tab';
-                        document.getElementById(tabId).classList.add('active');
+          })
+      
+          fileInput.addEventListener('change', function () {
+            if (this.files.length) {
+              handleFile(this.files[0])
+            }
+          })
+      
+          function handleFile(file) {
+            if (!file.type.match('image.*')) {
+              alert('Please select an image file')
+              return
+            }
+      
+            const reader = new FileReader()
+            reader.onload = function (e) {
+              uploadedImage.src = e.target.result
+              uploadedImage.style.display = 'block'
+              uploadPlaceholder.style.display = 'none'
+              analyzeUploadBtn.disabled = false
+            }
+            reader.readAsDataURL(file)
+          }
+        }
+      
+        if (uploadForm) {
+            uploadForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(uploadForm);
+
+                try {
+                    uploadResult.textContent = 'Analyzing Image...';
+                    uploadResult.style.color = 'blue';
+
+                    const response = await fetch('/upload', {
+                        method: 'POST',
+                        body: formData
                     });
-                });
-            }
-        
-            // File upload handling
-            const uploadArea = document.getElementById('uploadArea');
-            const fileInput = document.getElementById('fileInput');
-            const uploadedImage = document.getElementById('uploadedImage');
-            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
-            const analyzeUploadBtn = document.getElementById('analyzeUploadBtn');
-        
-            if (uploadArea) {
-                uploadArea.addEventListener('click', function() {
-                    fileInput.click();
-                });
-        
-                uploadArea.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    this.style.borderColor = '#2e7d32';
-                });
-        
-                uploadArea.addEventListener('dragleave', function() {
-                    this.style.borderColor = '#ddd';
-                });
-        
-                uploadArea.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    this.style.borderColor = '#ddd';
-                    
-                    if (e.dataTransfer.files.length) {
-                        handleFile(e.dataTransfer.files[0]);
+
+                    const data = await response.json();
+
+                    if (data.result) {
+                        resultText.textContent = data.result; // Update resultText
+                        resultContainer.style.display = 'block'; //show the result container
+                        uploadResult.textContent = 'Analysis complete.';
+                        uploadResult.style.color = 'green';
+                        resultContainer.scrollIntoView({ behavior: 'smooth' }); //smooth scroll to result
+                    } else if (data.error) {
+                        uploadResult.textContent = data.error;
+                        uploadResult.style.color = 'red';
                     }
-                });
-        
-                fileInput.addEventListener('change', function() {
-                    if (this.files.length) {
-                        handleFile(this.files[0]);
-                    }
-                });
-        
-                function handleFile(file) {
-                    if (!file.type.match('image.*')) {
-                        alert('Please select an image file');
-                        return;
-                    }
-        
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        uploadedImage.src = e.target.result;
-                        uploadedImage.style.display = 'block';
-                        uploadPlaceholder.style.display = 'none';
-                        analyzeUploadBtn.disabled = false;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-        
-            // Camera handling
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const capturedImage = document.getElementById('capturedImage');
-            const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-            const startCameraBtn = document.getElementById('startCameraBtn');
-            const capturePictureBtn = document.getElementById('capturePictureBtn');
-            const analyzeCaptureBtn = document.getElementById('analyzeCaptureBtn');
-        
-            if (startCameraBtn) {
-                startCameraBtn.addEventListener('click', async function() {
-                    try {
-                        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                        video.srcObject = stream;
-                        video.style.display = 'block';
-                        cameraPlaceholder.style.display = 'none';
-                        startCameraBtn.style.display = 'none';
-                        capturePictureBtn.style.display = 'inline-block';
-                    } catch (err) {
-                        console.error('Error accessing camera:', err);
-                        alert('Could not access the camera. Please make sure you have granted permission.');
-                    }
-                });
-        
-                capturePictureBtn.addEventListener('click', function() {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    
-                    capturedImage.src = canvas.toDataURL('image/png');
-                    capturedImage.style.display = 'block';
-                    video.style.display = 'none';
-                    
-                    // Stop the camera stream
-                    const stream = video.srcObject;
-                    const tracks = stream.getTracks();
-                    tracks.forEach(track => track.stop());
-                    
-                    capturePictureBtn.style.display = 'none';
-                    startCameraBtn.style.display = 'inline-block';
-                    startCameraBtn.textContent = 'Retake Photo';
-                    analyzeCaptureBtn.disabled = false;
-                });
-            }
-        
-            // Analysis handling
-            const analyzeButtons = [analyzeUploadBtn, analyzeCaptureBtn].filter(Boolean);
-            const resultContainer = document.getElementById('resultContainer');
-            const resultText = document.getElementById('resultText');
-        
-            analyzeButtons.forEach(button => {
-                if (button) {
-                    button.addEventListener('click', function() {
-                        // In a real app, you would send the image to a backend for processing
-                        // For now, we'll just simulate a response
-                        resultContainer.style.display = 'block';
-                        resultText.textContent = 'Healthy plant detected. No diseases found.';
-                        
-                        // Scroll to results
-                        resultContainer.scrollIntoView({ behavior: 'smooth' });
-                    });
+                } catch (error) {
+                    console.error('Error:', error);
+                    uploadResult.textContent = 'An error occurred during upload.';
+                    uploadResult.style.color = 'red';
                 }
             });
-        });</script>
+        }
+      
+        // Camera handling
+        const video = document.getElementById('video')
+        const canvas = document.getElementById('canvas')
+        const capturedImage = document.getElementById('capturedImage')
+        const cameraPlaceholder = document.getElementById('cameraPlaceholder')
+        const startCameraBtn = document.getElementById('startCameraBtn')
+        const capturePictureBtn = document.getElementById('capturePictureBtn')
+        const analyzeCaptureBtn = document.getElementById('analyzeCaptureBtn')
+      
+        if (startCameraBtn) {
+          startCameraBtn.addEventListener('click', async function () {
+            try {
+              const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+              video.srcObject = stream
+              video.style.display = 'block'
+              cameraPlaceholder.style.display = 'none'
+              startCameraBtn.style.display = 'none'
+              capturePictureBtn.style.display = 'inline-block'
+            } catch (err) {
+              console.error('Error accessing camera:', err)
+              alert('Could not access the camera. Please make sure you have granted permission.')
+            }
+          })
+      
+          capturePictureBtn.addEventListener('click', function () {
+            canvas.width = video.videoWidth
+            canvas.height = video.videoHeight
+      
+            const ctx = canvas.getContext('2d')
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+      
+            capturedImage.src = canvas.toDataURL('image/png')
+            capturedImage.style.display = 'block'
+            video.style.display = 'none'
+      
+            const stream = video.srcObject
+            const tracks = stream.getTracks()
+            tracks.forEach((track) => track.stop())
+      
+            capturePictureBtn.style.display = 'none'
+            startCameraBtn.style.display = 'inline-block'
+            startCameraBtn.textContent = 'Retake Photo'
+            analyzeCaptureBtn.disabled = false
+          })
+        }
+      
+        // Analysis handling
+        const analyzeButtons = [analyzeUploadBtn, analyzeCaptureBtn].filter(Boolean)
+        const resultContainer = document.getElementById('resultContainer')
+        const resultText = document.getElementById('resultText')
+      
+        analyzeButtons.forEach((button) => {
+          if (button) {
+            button.addEventListener('click', function () {
+              resultContainer.style.display = 'block'
+              resultText.textContent = 'Healthy plant detected. No diseases found.'
+              resultContainer.scrollIntoView({ behavior: 'smooth' })
+            })
+          }
+        })
+      })
+    </script>
 
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-</body>
+  </body>
 </html>
