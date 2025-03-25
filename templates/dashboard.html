@@ -298,7 +298,6 @@
       <div class="tab-container">
         <div class="tabs">
           <button class="tab-button active" data-tab="upload">Upload Image</button>
-          <button class="tab-button" data-tab="camera">Take Photo</button>
         </div>
         <div class="tab-content active" id="upload-tab">
           <div class="card">
@@ -538,7 +537,7 @@
           if (button) {
             button.addEventListener('click', function () {
               resultContainer.style.display = 'block'
-              resultText.textContent = 'Healthy plant detected. No diseases found.'
+              resultText.textContent = ''//
               resultContainer.scrollIntoView({ behavior: 'smooth' })
             })
           }
