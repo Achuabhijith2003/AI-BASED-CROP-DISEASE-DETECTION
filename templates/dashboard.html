@@ -368,6 +368,10 @@
         <div class="card-body">
             <p id="resultText" class="result-text"></p>
         </div>
+        <div class="card-body">
+          <h2>Treatment</h2>
+          <p id="resultTexttretment" class="result-text"></p>
+      </div>
     </div>
     <div class="result-container" id="resultContainer" style="display: none;"></div>
     </div>
@@ -448,39 +452,40 @@
         }
       
         if (uploadForm) {
-            uploadForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
+          uploadForm.addEventListener('submit', async (e) => {
+              e.preventDefault();
 
-                const formData = new FormData(uploadForm);
+              const formData = new FormData(uploadForm);
 
-                try {
-                    uploadResult.textContent = 'Analyzing Image...';
-                    uploadResult.style.color = 'blue';
+              try {
+                  uploadResult.textContent = 'Analyzing Image...';
+                  uploadResult.style.color = 'blue';
 
-                    const response = await fetch('/upload', {
-                        method: 'POST',
-                        body: formData
-                    });
+                  const response = await fetch('/upload', {
+                      method: 'POST',
+                      body: formData
+                  });
 
-                    const data = await response.json();
+                  const data = await response.json();
 
-                    if (data.result) {
-                        resultText.textContent = data.result; // Update resultText
-                        resultContainer.style.display = 'block'; //show the result container
-                        uploadResult.textContent = 'Analysis complete.';
-                        uploadResult.style.color = 'green';
-                        resultContainer.scrollIntoView({ behavior: 'smooth' }); //smooth scroll to result
-                    } else if (data.error) {
-                        uploadResult.textContent = data.error;
-                        uploadResult.style.color = 'red';
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    uploadResult.textContent = 'An error occurred during upload.';
-                    uploadResult.style.color = 'red';
-                }
-            });
-        }
+                  if (data.result) {
+                      resultText.textContent = data.result;
+                      resultTexttretment.textContent = data.treatment; // Display treatment
+                      resultContainer.style.display = 'block';
+                      uploadResult.textContent = 'Analysis complete.';
+                      uploadResult.style.color = 'green';
+                      resultContainer.scrollIntoView({ behavior: 'smooth' });
+                  } else if (data.error) {
+                      uploadResult.textContent = data.error;
+                      uploadResult.style.color = 'red';
+                  }
+              } catch (error) {
+                  console.error('Error:', error);
+                  uploadResult.textContent = 'An error occurred during upload.';
+                  uploadResult.style.color = 'red';
+              }
+          });
+      }
       
         // Camera handling
         const video = document.getElementById('video')

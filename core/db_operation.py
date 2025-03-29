@@ -68,9 +68,31 @@ def show_treatment_data():
         print(f"Error fetching data: {e}")
 
 # Run the functions
-create_table()
-insert_data_from_excel('DB/disease_details.xlsx')
-show_treatment_data()
+# create_table()
+# insert_data_from_excel('DB/disease_details.xlsx')
+# show_treatment_data()
 
 # Close the database connection
+
+def get_the_treatment(disease_name):
+    DB_PATH = 'DB/Treatment.db'
+    connection = sqlite3.connect(DB_PATH)
+    cursor = connection.cursor()
+    """Fetches treatment_control_measures for a given disease_name."""
+    try:
+        cursor.execute("SELECT treatment_control_measures FROM treatment WHERE disease_name = ?", (disease_name,))
+        result = cursor.fetchone()
+        if result:
+            return result[0]
+        else:
+            return "No treatment found for the given disease."
+    except sqlite3.Error as e:
+        return f"Error fetching treatment: {e}"
+    
+result=get_the_treatment("Blast")
+print("Result: ",result)
+
+
 connection.close()
+
+

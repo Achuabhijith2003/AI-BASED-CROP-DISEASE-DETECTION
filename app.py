@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import os
 from werkzeug.utils import secure_filename
 from core.test_plant import predict_diseases
-
+from core.db_operation import get_the_treatment
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'uploads'
@@ -29,7 +29,9 @@ def upload_file():
             file.save(filepath)
             print("file_uploaded", filepath)
             predictdseases = predict_diseases(filepath)
-            return jsonify({'result': predictdseases})  # Return the result
+            tretment=get_the_treatment(predictdseases)
+            print(f"Tratement of {predictdseases} is {tretment}")
+            return jsonify({'result': predictdseases, 'treatment': tretment})  # Return the result
         else:
             return jsonify({'error': 'Invalid file type'})
     return jsonify({'error': 'Invalid request'}) #added for cases where the request is not POST.
