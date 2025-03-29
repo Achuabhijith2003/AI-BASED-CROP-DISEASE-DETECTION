@@ -24,6 +24,6 @@ pip install redis
 
 pip install celery
 
-pip install numpy tensorflow matplotlib opencv-python
+pip install numpy tensorflow matplotlib opencv-python openpyxl pandas
 
 celery -A app.celery worker --loglevel=info
