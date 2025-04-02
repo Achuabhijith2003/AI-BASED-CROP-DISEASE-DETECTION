@@ -35,8 +35,8 @@ def predict_diseases(image_path):
     # Disease class names
     class_name = [
         'Aggregate sheath',
-        'Bacterial_leaf_blight',
-        'Bacterial_leaf_streak',
+        'Bacterial leaf blight',
+        'Bacterial leaf streak',
         'Blast',
         'Brown spot',
         'Eye spot',
@@ -51,16 +51,16 @@ def predict_diseases(image_path):
         'Tungro1',
         'crown sheath rot',
         'flag leaf sheath',
-        'foot_rot',
+        'foot rot',
         'grassy stunt virus',
         'leaf scald',
         'leaf scald (1)',
-        'pecky_rice_kernel_spotting',
-        'pecky_rice_kernel_spotting (1)',
+        'pecky rice kernel spotting',
+        'pecky rice kernel spotting (1)',
         'powdery mildew',
         'ragged stunt virus',
         'sheath blight',
-        'sheath_brown_rot',
+        'sheath brown rot',
         'yellow mottle1'
     ]
 

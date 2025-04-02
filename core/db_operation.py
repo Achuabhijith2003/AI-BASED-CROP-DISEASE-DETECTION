@@ -32,7 +32,8 @@ def insert_data_from_excel(file_path):
         print("Columns in Excel file:", df.columns)  # Debugging line
         
         # Correct column names as per the Excel file
-        required_columns = {'Disease Name', 'Causal Organism', 'Symptoms', 'Treatment / Control Measures', 'Chemical Treatment (if applicable)'}
+        required_columns = {'Disease Name', 'Causal Organism', 'Symptoms', 'Treatment/Control', 'Chemical Treatment'}
+
         
         if required_columns.issubset(df.columns):
             # Rename columns to match database column names
@@ -40,8 +41,8 @@ def insert_data_from_excel(file_path):
                 'Disease Name': 'disease_name',
                 'Causal Organism': 'causal_organism',
                 'Symptoms': 'symptoms',
-                'Treatment / Control Measures': 'treatment_control_measures',
-                'Chemical Treatment (if applicable)': 'chemical_treatment'
+                'Treatment/Control': 'treatment_control_measures',
+                'Chemical Treatment': 'chemical_treatment'
             }, inplace=True)
             
             for _, row in df.iterrows():
@@ -89,7 +90,7 @@ def get_the_treatment(disease_name):
     except sqlite3.Error as e:
         return f"Error fetching treatment: {e}"
     
-result=get_the_treatment("Blast")
+result=get_the_treatment("crown sheath rot")
 print("Result: ",result)
 
 

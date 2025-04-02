@@ -1,10 +1,10 @@
 Ai
 
-for windows
-set FLASK_APP=server
+for windows:
+    set FLASK_APP=app.py
 
 
-for linx and mac
+for linx and mac:
 export FLASK_APP=server
 
 
@@ -15,15 +15,7 @@ flask run
  <button class="tab-button" data-tab="camera">Take Photo</button>
 
 
-redis-server.exe
 
 
-!pip install opencv-python
+pip install numpy tensorflow matplotlib opencv-python openpyxl pandas Flask
 
-pip install redis
-
-pip install celery
-
-pip install numpy tensorflow matplotlib opencv-python openpyxl pandas
-
-celery -A app.celery worker --loglevel=info
