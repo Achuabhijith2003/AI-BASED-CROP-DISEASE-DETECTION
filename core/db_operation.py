@@ -90,10 +90,12 @@ def get_the_treatment(disease_name):
     except sqlite3.Error as e:
         return f"Error fetching treatment: {e}"
     
-result=get_the_treatment("crown sheath rot")
-print("Result: ",result)
+# result=get_the_treatment("Aggregate sheath")
+# print("Result: ",result)
 
 
 connection.close()
 
+
+# Aggregate sheath
 
